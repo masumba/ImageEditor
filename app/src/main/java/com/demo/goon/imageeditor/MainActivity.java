@@ -2,6 +2,7 @@ package com.demo.goon.imageeditor;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -13,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -22,6 +24,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.util.UUID;
+
+import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,6 +39,10 @@ public class MainActivity extends AppCompatActivity {
     final int requestPermissionCode=1;
     DisplayMetrics displayMetrics;
     int width,height;
+
+    public static final String IMAGE_EXTENSION = "jpg";
+    public static final int REQUEST_PERMISSION = 200;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +61,14 @@ public class MainActivity extends AppCompatActivity {
         if (permissionCheck == PackageManager.PERMISSION_DENIED){
             RequestRuntimePermission();
         }
+
+        /**/
+        if (ContextCompat.checkSelfPermission(this,Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    REQUEST_PERMISSION);
+        }
+        /**/
 
         /*cameraOpen();
         galleryOpen();*/
@@ -89,11 +107,27 @@ public class MainActivity extends AppCompatActivity {
 
         camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
+        /*file = new File(Environment.getExternalStorageDirectory(),
+                "file"+String.valueOf(System.currentTimeMillis())+".jpg");*/
         file = new File(Environment.getExternalStorageDirectory(),
-                "file"+String.valueOf(System.currentTimeMillis())+".jpg");
-        uri = Uri.fromFile(file);
+                "file"+String.valueOf(UUID.randomUUID())+".JPEG");
+
+
+        //uri = Uri.fromFile(file);
+        String authorities = getApplicationContext().getPackageName()+".fileprovider";
+
+        /**/
+
+        Toast.makeText(this,file.toString(),Toast.LENGTH_LONG).show();
+        System.out.println("FileLocation="+file);
+        /**/
+
+        uri = FileProvider.getUriForFile(this, authorities, file);
+
+
         camIntent.putExtra(MediaStore.EXTRA_OUTPUT,uri);
         camIntent.putExtra("return-data",true);
+
         startActivityForResult(camIntent,0);
     }
 
@@ -126,7 +160,11 @@ public class MainActivity extends AppCompatActivity {
     private void cropImage() {
         try{
             cropIntent = new Intent("com.android.camera.action.CROP");
-            cropIntent.setDataAndType(uri,"image/+");
+            cropIntent.setDataAndType(uri,"image/*");
+
+            /**/
+            cropIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            /**/
 
             cropIntent.putExtra("crop","true");
             cropIntent.putExtra("outputX",180);
@@ -136,11 +174,15 @@ public class MainActivity extends AppCompatActivity {
             cropIntent.putExtra("scaleUpIfNeeded",true);
             cropIntent.putExtra("return-data",true);
 
+            /**/
+            cropIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+            cropIntent.putExtra("noFaceDetection", true);
+            /**/
+
             startActivityForResult(cropIntent,1);
 
         } catch (ActivityNotFoundException ex){
             ex.getStackTrace();
-
         }
     }
 
