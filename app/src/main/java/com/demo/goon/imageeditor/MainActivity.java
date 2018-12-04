@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -41,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
         btnCamera = (Button)findViewById(R.id.btnCamera);
         btnGallery = (Button)findViewById(R.id.btn_gallery);
         imageView = (ImageView)findViewById(R.id.imgView);
+
+        /*strict mode*/
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
 
         int permissionCheck = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA);
         if (permissionCheck == PackageManager.PERMISSION_DENIED){
