@@ -43,10 +43,6 @@ public class MainActivity extends AppCompatActivity {
         btnGallery = (Button)findViewById(R.id.btn_gallery);
         imageView = (ImageView)findViewById(R.id.imgView);
 
-        /*strict mode*/
-        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-        StrictMode.setVmPolicy(builder.build());
-
         int permissionCheck = ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA);
         if (permissionCheck == PackageManager.PERMISSION_DENIED){
             RequestRuntimePermission();
@@ -86,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void cameraOpen() {
+
+        /*strict mode*/
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
 
         camIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
