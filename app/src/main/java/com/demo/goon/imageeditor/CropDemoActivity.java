@@ -53,7 +53,7 @@ public class CropDemoActivity extends AppCompatActivity {
 
     public void checkPermission(){
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        /*if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 !=PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},
                     REQUEST_PERMISSION);
@@ -63,12 +63,13 @@ public class CropDemoActivity extends AppCompatActivity {
                 !=PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     REQUEST_PERMISSION);
-        }
+        }*/
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                /*Permissions*/
+                requestPermissions(new String[]{Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         Manifest.permission.READ_EXTERNAL_STORAGE}, 555);
             } catch (Exception e){
                 //
