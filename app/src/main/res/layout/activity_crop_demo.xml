@@ -17,6 +17,13 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/btn_camera"
+            android:layout_gravity="center"
+            android:text="Camera"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/btn_permission"
             android:layout_gravity="center"
             android:text="Pick Image"
@@ -25,7 +32,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="9"
+            android:layout_weight="8"
             android:layout_gravity="center"
             android:id="@+id/imageview"/>
     </LinearLayout>

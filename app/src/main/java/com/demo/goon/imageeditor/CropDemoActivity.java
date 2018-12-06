@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
@@ -32,6 +33,8 @@ import java.util.Date;
 public class CropDemoActivity extends AppCompatActivity {
 
     public static final int REQUEST_PERMISSION = 200;
+    Button btnPermission;
+    Button btnCamera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,32 +42,33 @@ public class CropDemoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crop_demo);
 
         /**/
-        /*Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);*/
-        Button btnPermission = (Button)findViewById(R.id.btn_permission);
+        checkPermission();
+
+        btnCamera = (Button)findViewById(R.id.btn_camera);
+        btnPermission = (Button)findViewById(R.id.btn_permission);
+        /**/
+        btnCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openCamera();
+            }
+        });
+
         btnPermission.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                checkPermission();
+                pickImage();
             }
         });
+
         /**/
     }
 
+    private void openCamera() {
+        Toast.makeText(this,"Hello",Toast.LENGTH_SHORT).show();
+    }
+
     public void checkPermission(){
-
-        /*if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
-                !=PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},
-                    REQUEST_PERMISSION);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
-                !=PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    REQUEST_PERMISSION);
-        }*/
-
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
@@ -75,7 +79,8 @@ public class CropDemoActivity extends AppCompatActivity {
                 //
             }
         } else {
-            pickImage();
+            btnCamera.setEnabled(false);
+            btnPermission.setEnabled(false);
         }
     }
 
