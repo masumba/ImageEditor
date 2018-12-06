@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //uri = Uri.fromFile(file);
-        String authorities = getApplicationContext().getPackageName()+".fileprovider";
+        String authorities = getApplicationContext().getPackageName()+".provider";
 
         /**/
 

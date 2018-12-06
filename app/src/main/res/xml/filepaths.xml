@@ -2,7 +2,7 @@
 <paths xmlns:android="http://schemas.android.com/apk/res/android">
 
     <external-path
-        name="mediaimages"
-        path="Android/data/com.demo.goon.imageeditor/files/Images"/>
+        name="my_images"
+        path="."/>
 
 </paths>
