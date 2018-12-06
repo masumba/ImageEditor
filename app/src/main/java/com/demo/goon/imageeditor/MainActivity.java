@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     private void cropImage() {
         try{
             cropIntent = new Intent("com.android.camera.action.CROP");
-            cropIntent.setDataAndType(uri,"image/*");
+            //cropIntent.setDataAndType(uri,"image/*");
 
             /**/
             cropIntent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
