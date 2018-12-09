@@ -18,7 +18,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -28,14 +28,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
+        <!--Cropper Start-->
         <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:screenOrientation="portrait" />
 
-        <!---->
         <provider
             android:authorities="${applicationId}.provider"
             android:name="android.support.v4.content.FileProvider"
@@ -45,7 +45,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths"/>
         </provider>
-        <!---->
+        <!--Cropper End-->
     </application>
 
 </manifest>
